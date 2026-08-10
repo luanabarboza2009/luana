@@ -18,6 +18,26 @@ def adicionar_livro(livros):
 
     print(f"Livro '{titulo}' adicionado com sucesso!")
 
+def registrar_emprestimo(livros, isbn):
+    for livro in livros:
+        if livro["isbn"] == isbn:
+            if livro["status"] == "disponível":
+                livro["status"] = "emprestado"
+                return True
+            return False
+
+    return False
+
+def registrar_devolucao(livros, isbn):
+    for livro in livros:
+        if livro["isbn"] == isbn:
+            if livro["status"] == "emprestado":
+                livro["status"] = "disponível"
+                return True
+            return False
+
+    return False
+
 while True:
     print("\nBem-vindo à biblioteca!")
     print("1: Adicionar livro")
@@ -34,11 +54,21 @@ while True:
         adicionar_livro(livros)
 
     elif opcao == "2":
-        "Registrar empréstimo"
+        isbn = input("Digite o ISBN do livro: ")
+
+        if registrar_emprestimo(livros, isbn):
+            print("Empréstimo registrado com sucesso!")
+        else:
+            print("Não foi possível registrar o empréstimo.")
 
     elif opcao == "3":
-        "Registrar devolução"
+        isbn = input("Digite o ISBN do livro: ")
 
+        if registrar_devolucao(livros, isbn):
+            print("Devolução registrada com sucesso!")
+        else:
+            print("Não foi possível registrar a devolução.")
+            
     elif opcao == "4":
        "Listar os livros"
 

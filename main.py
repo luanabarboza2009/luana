@@ -1,4 +1,33 @@
-livros = []
+import csv
+def salvar_livros(livros):
+    with open("livros.csv", "w", newline="", encoding="utf-8") as arquivo:
+        campos = ["titulo", "autor", "ano", "isbn", "status"]
+
+        escritor = csv.DictWriter(
+            arquivo,
+            fieldnames=campos,
+            delimiter=";"
+        )
+
+        escritor.writeheader()
+        escritor.writerows(livros)
+
+    return True
+
+def carregar_livros():
+    livros = []
+
+    try:
+        with open("livros.csv", "r", encoding="utf-8") as arquivo:
+            leitor = csv.DictReader(arquivo, delimiter=";")
+
+            for livro in leitor:
+                livros.append(livro)
+
+    except FileNotFoundError:
+        pass
+
+    return livros
 
 def adicionar_livro(livros):
     titulo = input("Digite o título do livro: ")
@@ -79,6 +108,8 @@ def ordenar_livros(livros):
     
     for livro in livros:
         print(f"- {livro['titulo']}")
+
+livros = carregar_livros()
 
 while True:
     print("\nBem-vindo à biblioteca!")

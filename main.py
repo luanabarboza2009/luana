@@ -1,3 +1,23 @@
+livros = []
+
+def adicionar_livro(livros):
+    titulo = input("Digite o título do livro: ")
+    autor = input("Digite o autor do livro: ")
+    ano = input("Digite o ano de publicação do livro: ")
+    isbn = input("Digite o ISBN do livro: ")
+
+    livro = {
+        "titulo": titulo,
+        "autor": autor,
+        "ano": ano,
+        "isbn": isbn,
+        "status": "disponível"
+    }
+
+    livros.append(livro)
+
+    print(f"Livro '{titulo}' adicionado com sucesso!")
+
 while True:
     print("\nBem-vindo à biblioteca!")
     print("1: Adicionar livro")
@@ -11,7 +31,7 @@ while True:
     opcao = input("Escolha uma opção: ")
 
     if opcao == "1":
-        "Adicionar livro"
+        adicionar_livro(livros)
 
     elif opcao == "2":
         "Registrar empréstimo"

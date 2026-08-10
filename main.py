@@ -53,7 +53,6 @@ def listar_livros(livros):
         print(f"Status: {livro['status']}")
         print("------------------------")
 
-
 def buscar_livro(livros):
     isbn = input("Digite o ISBN do livro: ")
 
@@ -69,6 +68,18 @@ def buscar_livro(livros):
 
     print("Livro não encontrado.")
     
+def ordenar_livros(livros):
+    if not livros:
+        print("Nenhum livro cadastrado.")
+        return
+
+    livros.sort(key=lambda livro: livro["titulo"].lower())
+
+    print("Livros ordenados pelo título:")
+    
+    for livro in livros:
+        print(f"- {livro['titulo']}")
+
 while True:
     print("\nBem-vindo à biblioteca!")
     print("1: Adicionar livro")
@@ -109,9 +120,7 @@ while True:
         buscar_livro(livros)
 
     elif opcao == "6":
-        print("Ordenando a listagem de livros...")
-        livros.sort(key=lambda x: x["titulo"])
-        listar_livros(livros)
+        ordenar_livros(livros)
 
     elif opcao == "7":
         print("Saindo do programa...")

@@ -38,6 +38,37 @@ def registrar_devolucao(livros, isbn):
 
     return False
 
+def listar_livros(livros):
+    if not livros:
+        print("Nenhum livro cadastrado.")
+        return
+
+    print("\n=== LIVROS CADASTRADOS ===")
+
+    for livro in livros:
+        print(f"Título: {livro['titulo']}")
+        print(f"Autor: {livro['autor']}")
+        print(f"Ano: {livro['ano']}")
+        print(f"ISBN: {livro['isbn']}")
+        print(f"Status: {livro['status']}")
+        print("------------------------")
+
+
+def buscar_livro(livros):
+    isbn = input("Digite o ISBN do livro: ")
+
+    for livro in livros:
+        if livro["isbn"] == isbn:
+            print("\n=== LIVRO ENCONTRADO ===")
+            print(f"Título: {livro['titulo']}")
+            print(f"Autor: {livro['autor']}")
+            print(f"Ano: {livro['ano']}")
+            print(f"ISBN: {livro['isbn']}")
+            print(f"Status: {livro['status']}")
+            return
+
+    print("Livro não encontrado.")
+    
 while True:
     print("\nBem-vindo à biblioteca!")
     print("1: Adicionar livro")
@@ -70,13 +101,17 @@ while True:
             print("Não foi possível registrar a devolução.")
             
     elif opcao == "4":
-       "Listar os livros"
+        print("Listando os livros cadastrados...")
+        print(livros)
+        listar_livros(livros)
 
     elif opcao == "5":
-        "Buscar um livro"
+        buscar_livro(livros)
 
     elif opcao == "6":
-        "Ordenar a listagem de livros"
+        print("Ordenando a listagem de livros...")
+        livros.sort(key=lambda x: x["titulo"])
+        listar_livros(livros)
 
     elif opcao == "7":
         print("Saindo do programa...")

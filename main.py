@@ -83,19 +83,20 @@ def listar_livros(livros):
         print("------------------------")
 
 def buscar_livro(livros):
-    isbn = input("Digite o ISBN do livro: ")
+    busca = input("Digite o título ou autor do livro: ")
 
     for livro in livros:
-        if livro["isbn"] == isbn:
+        if livro["titulo"] == busca or livro["autor"] == busca:
             print("\n=== LIVRO ENCONTRADO ===")
             print(f"Título: {livro['titulo']}")
             print(f"Autor: {livro['autor']}")
             print(f"Ano: {livro['ano']}")
             print(f"ISBN: {livro['isbn']}")
             print(f"Status: {livro['status']}")
-            return
+            return True
 
     print("Livro não encontrado.")
+    return False
     
 def ordenar_livros(livros):
     if not livros:
@@ -125,11 +126,13 @@ while True:
 
     if opcao == "1":
         adicionar_livro(livros)
+        salvar_livros(livros)
 
     elif opcao == "2":
         isbn = input("Digite o ISBN do livro: ")
 
         if registrar_emprestimo(livros, isbn):
+            salvar_livros(livros)
             print("Empréstimo registrado com sucesso!")
         else:
             print("Não foi possível registrar o empréstimo.")
@@ -138,13 +141,13 @@ while True:
         isbn = input("Digite o ISBN do livro: ")
 
         if registrar_devolucao(livros, isbn):
+            salvar_livros(livros)
             print("Devolução registrada com sucesso!")
         else:
             print("Não foi possível registrar a devolução.")
             
     elif opcao == "4":
         print("Listando os livros cadastrados...")
-        print(livros)
         listar_livros(livros)
 
     elif opcao == "5":

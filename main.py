@@ -1,10 +1,12 @@
 # Importa o módulo csv, que permite trabalhar com arquivos CSV
 import csv
 
+# Salva a lista de livros no arquivo livros.csv
 def salvar_livros(livros):
     with open("livros.csv", "w", newline="", encoding="utf-8") as arquivo:
         campos = ["titulo", "autor", "ano", "isbn", "status"]
 
+# DictWriter permite salvar cada livro usando um dicionário
         escritor = csv.DictWriter(
             arquivo,
             fieldnames=campos,
@@ -16,6 +18,7 @@ def salvar_livros(livros):
 
     return True
 
+# Carrega os livros existentes no arquivo CSV para a memória
 def carregar_livros():
     livros = []
 
@@ -23,14 +26,17 @@ def carregar_livros():
         with open("livros.csv", "r", encoding="utf-8") as arquivo:
             leitor = csv.DictReader(arquivo, delimiter=";")
 
+# Cada linha do CSV é transformada em um dicionário
             for livro in leitor:
                 livros.append(livro)
 
+# Caso o arquivo ainda não exista, começa com uma lista vazia
     except FileNotFoundError:
         pass
 
     return livros
 
+# Solicita os dados do livro e adiciona um novo registro à lista
 def adicionar_livro(livros):
     titulo = input("Digite o título do livro: ")
     autor = input("Digite o autor do livro: ")
@@ -49,19 +55,26 @@ def adicionar_livro(livros):
 
     print(f"Livro '{titulo}' adicionado com sucesso!")
 
+# Procura o livro pelo ISBN e altera seu status para "emprestado"
 def registrar_emprestimo(livros, isbn):
     for livro in livros:
         if livro["isbn"] == isbn:
+
+# O empréstimo só pode ser feito se o livro estiver disponível
             if livro["status"] == "disponível":
                 livro["status"] = "emprestado"
                 return True
             return False
 
+# Retorna False caso nenhum livro tenha o ISBN informado
     return False
 
+# Procura o livro pelo ISBN e altera seu status para "disponível"
 def registrar_devolucao(livros, isbn):
     for livro in livros:
         if livro["isbn"] == isbn:
+
+# A devolução só pode ocorrer se o livro estiver emprestado
             if livro["status"] == "emprestado":
                 livro["status"] = "disponível"
                 return True
@@ -69,6 +82,7 @@ def registrar_devolucao(livros, isbn):
 
     return False
 
+# Exibe todos os livros cadastrados e seus respectivos dados
 def listar_livros(livros):
     if not livros:
         print("Nenhum livro cadastrado.")
@@ -84,6 +98,7 @@ def listar_livros(livros):
         print(f"Status: {livro['status']}")
         print("------------------------")
 
+# Procura um livro comparando o título ou o autor informado pelo usuário
 def buscar_livro(livros):
     busca = input("Digite o título ou autor do livro: ")
 
@@ -99,7 +114,8 @@ def buscar_livro(livros):
 
     print("Livro não encontrado.")
     return False
-    
+
+# Ordena a lista em ordem alfabética usando o título de cada livro
 def ordenar_livros(livros):
     if not livros:
         print("Nenhum livro cadastrado.")
@@ -112,8 +128,10 @@ def ordenar_livros(livros):
     for livro in livros:
         print(f"- {livro['titulo']}")
 
+# Carrega os livros salvos anteriormente antes de iniciar o programa
 livros = carregar_livros()
 
+# O menu continua sendo exibido até o usuário escolher a opção 7
 while True:
     print("\nBem-vindo à biblioteca!")
     print("1: Adicionar livro")
@@ -134,6 +152,8 @@ while True:
         isbn = input("Digite o ISBN do livro: ")
 
         if registrar_emprestimo(livros, isbn):
+            
+# Salva a alteração no arquivo somente se o empréstimo for realizado
             salvar_livros(livros)
             print("Empréstimo registrado com sucesso!")
         else:

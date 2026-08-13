@@ -1,4 +1,6 @@
+# Importa o módulo csv, que permite trabalhar com arquivos CSV
 import csv
+
 def salvar_livros(livros):
     with open("livros.csv", "w", newline="", encoding="utf-8") as arquivo:
         campos = ["titulo", "autor", "ano", "isbn", "status"]
